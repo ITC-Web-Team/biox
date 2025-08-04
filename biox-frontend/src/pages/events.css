@@ -1,0 +1,9 @@
+.e_cards{
+   display: grid;
+   justify-content: center;  
+align-content: center;
+grid-template-columns: repeat(2, 5fr);
+margin: 0 5rem;
+align-items: center;
+
+}
