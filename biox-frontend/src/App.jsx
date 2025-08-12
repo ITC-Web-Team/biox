@@ -2,7 +2,7 @@
 import './App.css'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
-import {BrowserRouter, Routes, Route} from 'react-router'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Team from './pages/Team'
 import Literature from './pages/literature'
 import Resources from './pages/Resources'
