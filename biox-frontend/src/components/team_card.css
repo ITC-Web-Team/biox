@@ -1,92 +1,97 @@
-/* .card_cont{
-    border: 2px solid;
-    height: 10px;
-    width: 60%;
-}
-.card_image{
-    
-   
-    
-   
-    border: 2px solid green;
-    border-radius: 50%;
-    padding: 1rem;
-}
-.card_image_cont{
-  
-}
-.card_bottom{
-    
-    font-size: 30px;
-    height: 30%;
-    border: 2px solid;
-    
-
-}
-h3,h2{
-    margin: 0;
-    align-items: center;
-} */
+/* Card container */
 .team_card {
-    width: 30rem;
-    background-color: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-    height: 40rem;
-  }
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  max-width: 300px;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  margin: 15px auto;
+  cursor: pointer;
+}
 
-  
-  .card_cont:hover {
-    transform: translateY(-5px);
+/* Hover animation */
+.team_card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Image container */
+.card_image_cont {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.team_card_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.team_card:hover .team_card_image {
+  transform: scale(1.05);
+}
+
+/* Bottom content */
+.team_card_bottom {
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.team_card_bottom h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.team_card_bottom h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #555;
+  margin: 3px 0;
+}
+
+/* Social icons */
+.team_card_bottom a {
+  color: #555;
+  margin: 0 8px;
+  transition: color 0.3s ease;
+}
+
+.team_card_bottom a:hover {
+  color: #0077b5; /* LinkedIn blue */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .team_card {
+    max-width: 90%;
   }
-  
-  
-  .team_card_bottom {
-    padding: 2px;
-    height: 40%;
+  .team_card_bottom h2 {
+    font-size: 1.2rem;
+  }
+  .team_card_bottom h3 {
+    font-size: 0.9rem;
   }
   .card_image_cont {
-    width: 70%;
-    height: 70%;
-    margin: 0 auto;
-    margin-bottom: 3rem;
-    border-radius: 50%;
-    overflow: hidden;
-    
-    border: 3px solid #ddd; /* optional border */
+    height: 200px;
   }
-  
-  .team_card_image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  
+}
+
+@media (max-width: 480px) {
   .team_card_bottom h2 {
-    margin: 10px 0 6px;
-    font-size: 50px;
-    font-weight: 600;
-    color: #1f2937;
+    font-size: 1rem;
   }
-  
   .team_card_bottom h3 {
-    margin: 4px 0;
-    font-size: 56px;
-    font-weight: 400;
-    color: #4b5563;
+    font-size: 0.85rem;
   }
-  
-  .team_card_bottom a {
-    margin: 10px 10px 0;
-    color: #555;
-    transition: color 0.3s ease;
+  .card_image_cont {
+    height: 180px;
   }
-  
-  .team_card_bottom a:hover {
-    color: #0077b5; /* LinkedIn blue */
-  }
-  
+}
