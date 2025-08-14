@@ -1,12 +1,9 @@
 // src/components/Events_card.jsx
 import React from 'react';
 import './events_card.css';
-import { useParams } from 'react-router-dom';
 import eventDetails from '../data/eventDetails';
 
-const Events_card = ({ onAddToCalendar, onRegister }) => {
-  const { id } = useParams();
-  const eventDetail = eventDetails.find(c => c.event_id === id);
+const Events_card = ({ eventDetail, onAddToCalendar, onRegister }) => {
 
   if(!eventDetail) return <p>Not found</p>;
 
