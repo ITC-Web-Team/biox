@@ -1,0 +1,10 @@
+* {
+    color: aliceblue;
+}
+button{
+    color:black;
+    background-color: red;
+}
+.projects-container {
+  margin-top: 80px; /* adjust based on your navbar height */
+}
