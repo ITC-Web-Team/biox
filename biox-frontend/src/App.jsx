@@ -7,6 +7,8 @@ import Team from './pages/Team'
 import Literature from './pages/literature'
 import Resources from './pages/Resources'
 import Events from './pages/events'
+import UserDashboard from './components/UserDashboard'
+import AdminPanel from './admin-panel/AdminPanel'
 function App() {
 
   return (
@@ -20,6 +22,8 @@ function App() {
 
           <Route path = '/literature' element = {<Literature />}></Route> 
           <Route path = '/resources' element = {<Resources />}></Route>
+          <Route path='/dashboard' element = {<UserDashboard />} />
+          <Route path='/admin' element = {<AdminPanel />} />
           
         </Routes>
       </BrowserRouter>

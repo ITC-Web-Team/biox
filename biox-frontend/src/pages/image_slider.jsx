@@ -23,7 +23,6 @@ const settings ={
 
 return (
     <div className='slider_container' style={{
-        margin:'5rem',
         height: '120rem',
         border:'2px solid',
         borderRadius: '10px',
