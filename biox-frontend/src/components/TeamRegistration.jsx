@@ -1,4 +1,3 @@
-// TeamRegistration.jsx
 import React, { useState } from "react";
 import axios from 'axios';
 import './TeamRegistration.css';
@@ -40,30 +39,38 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
     e.preventDefault();
     
     try {
-      // First create team
-      const teamResponse = await axios.post('http://localhost:8000/api/teams/', {
+      const teamResponse = await axios.post('http://localhost:8000/api/teams/create_team/', {
         team_name: teamName,
         event_id: event.event_id
       });
 
       const teamId = teamResponse.data.team_id;
 
-      // Register each team member
-      const registrationPromises = teamMembers.map(member =>
-        axios.post('http://localhost:8000/api/registrations/', {
-          ...member,
+      for (const member of teamMembers) {
+        await axios.post('http://localhost:8000/api/registrations/', {
+          name: member.name,
+          email: member.email,
+          phone: member.phone,
+          ldap_id: member.ldap_id,
+          is_team_leader: member.is_leader, // Changed from is_leader to match model
           event_id: event.event_id,
           team_id: teamId
-        })
-      );
-
-      await Promise.all(registrationPromises);
+        });
+      }
+      
       alert('Team registration successful!');
       onRegister();
       onClose();
     } catch (error) {
       console.error('Registration error', error);
-      alert('Registration failed. Please try again.');
+      
+      if (error.response) {
+        console.log('Error response:', error.response.data);
+        console.log('Error status:', error.response.status);
+        alert(`Registration failed: ${error.response.data.error || error.response.data}`);
+      } else {
+        alert('Registration failed. Please try again.');
+      }
     }
   };
 

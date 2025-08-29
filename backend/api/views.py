@@ -1,5 +1,6 @@
 from rest_framework import viewsets, status
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes, api_view
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from django.http import HttpResponse
 from .models import Event, Registration, Team
@@ -10,13 +11,17 @@ import uuid
 class EventViewSet(viewsets.ModelViewSet):
   queryset = Event.objects.all()
   serializer_class = EventSerializer
+  permission_classes = [IsAuthenticated, IsAdminUser]
 
 class RegistrationViewSet(viewsets.ModelViewSet):
   queryset = Registration.objects.all()
   serializer_class = RegistrationSerializer
+  permission_classes = [IsAuthenticated, IsAdminUser]
 
   @action(detail=False, methods=['get'])
   def by_event(self, request):
+    if not request.user.is_staff:
+        return Response({"error": "Admin access required"}, status=status.HTTP_403_FORBIDDEN)
     event_id = request.query_params.get('event_id')
     print(f"Received request for event_id: {event_id}")  # Add this for debugging
     
@@ -32,6 +37,8 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 
   @action(detail=False, methods=['get'])
   def export_excel(self, request):
+      if not request.user.is_staff:
+          return Response({"error": "Admin access required"}, status=status.HTTP_403_FORBIDDEN)
       try:
           event_id = request.query_params.get('event_id')
           print(f"Export request for event_id: {event_id}")
@@ -53,10 +60,9 @@ class RegistrationViewSet(viewsets.ModelViewSet):
           if registrations.count() == 0:
               return Response({"error": "No registrations found for this event"}, status=status.HTTP_404_NOT_FOUND)
 
-          # Prepare data for Excel - FIX TIMEZONE ISSUE
+          # Prepare data for Excel
           data = []
           for reg in registrations:
-              # Convert timezone-aware datetime to timezone-naive
               registration_date = reg.registration_date
               if registration_date.tzinfo is not None:
                   registration_date = registration_date.replace(tzinfo=None)
@@ -69,14 +75,11 @@ class RegistrationViewSet(viewsets.ModelViewSet):
                   'Registration Date': registration_date.strftime('%Y-%m-%d %H:%M:%S')
               })
           
-          # Create DataFrame
           df = pd.DataFrame(data)
           
-          # Create HTTP response
           response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
           response['Content-Disposition'] = f'attachment; filename="registrations_{event_id}.xlsx"'
           
-          # Save to response
           df.to_excel(response, index=False, sheet_name='Registrations', engine='openpyxl')
           
           return response
@@ -93,19 +96,17 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
-    @action(detail=False, methods=['post'])
-    def create_team(self, request):
+    def create(self, request):
         event_id = request.data.get('event_id')
         team_name = request.data.get('team_name')
 
         if not event_id or not team_name:
-            return Response({"error" : "event_id and team_name are required"}, status=400)
+            return Response({"error": "event_id and team_name are required"}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
             event = Event.objects.get(event_id=event_id)
-
-            
             team_id = str(uuid.uuid4())[:8]
 
             team = Team.objects.create(
@@ -115,7 +116,22 @@ class TeamViewSet(viewsets.ModelViewSet):
             )
 
             serializer = self.get_serializer(team)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         except Event.DoesNotExist:
-            return Response({"error" : "Event not found"}, status=404)
+            return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_admin(request):
+    return Response({
+        'is_admin': request.user.is_staff or request.user.is_superuser,
+        'username': request.user.username
+    })
+
+@api_view(['POST'])
+def logout_view(request):
+    from django.contrib.auth import logout
+    logout(request)
+    return Response({'message': 'Logged out successfully'})

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './AdminPanel.css';
 
 const AdminPanel = () => {
@@ -8,80 +9,113 @@ const AdminPanel = () => {
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [exportLoading, setExportLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('Component mounted, fetching events...');
-    fetchEvents();
+    checkAuthentication();
   }, []);
+
+  const checkAuthentication = async () => {
+    try {
+      // Check if user is authenticated and is admin/staff
+      const response = await axios.get('http://127.0.0.1:8000/api/auth/check_admin/', {
+        withCredentials: true // Important for session/cookie auth
+      });
+      
+      if (response.data.is_admin) {
+        setIsAuthenticated(true);
+        fetchEvents();
+      } else {
+        navigate('/login'); // Redirect to login
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+      navigate('/login'); // Redirect to login
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  // Add authentication headers to all requests
+  const authAxios = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api/',
+    withCredentials: true,
+  });
 
   const fetchEvents = async () => {
     try {
-      console.log('Fetching events from API...');
-      const response = await axios.get('http://127.0.0.1:8000/api/events/');
-      console.log('Events API response:', response.data);
+      const response = await authAxios.get('events/');
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
-      alert('Error fetching events. Please try again.');
+      if (error.response?.status === 403) {
+        alert('Admin access required');
+        navigate('/login');
+      }
     }
   };
 
   const fetchRegistrations = async (eventId) => {
     setLoading(true);
-    console.log('Fetching registrations for event_id:', eventId);
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/registrations/by_event/?event_id=${eventId}`);
-      console.log('Registrations API response:', response.data);
+      const response = await authAxios.get(`registrations/by_event/?event_id=${eventId}`);
       setRegistrations(response.data);
     } catch (error) {
       console.error('Error fetching registrations:', error);
-      alert('Error fetching registrations. Please try again.');
-      setRegistrations([]);
+      if (error.response?.status === 403) {
+        alert('Admin access required');
+        navigate('/login');
+      }
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleEventChange = (e) => {
-    console.log('Dropdown changed, selected value:', e.target.value);
-    const eventId = e.target.value;
-    setSelectedEvent(eventId);
-    if (eventId) {
-      fetchRegistrations(eventId);
-    } else {
-      setRegistrations([]);
     }
   };
 
   const exportToExcel = async (eventId) => {
     setExportLoading(true);
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/registrations/export_excel/?event_id=${eventId}`, {
+      const response = await authAxios.get(`registrations/export_excel/?event_id=${eventId}`, {
         responseType: 'blob'
       });
-      
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `registrations_${eventId}.xlsx`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-      window.URL.revokeObjectURL(url);
-      alert('Excel file downloaded successfully!');
+      // ... rest of export code
     } catch (error) {
       console.error('Error exporting to Excel:', error);
-      alert('Error exporting data. Please try again.');
+      if (error.response?.status === 403) {
+        alert('Admin access required');
+        navigate('/login');
+      }
     } finally {
       setExportLoading(false);
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://127.0.0.1:8000/api/auth/logout/', {}, {
+        withCredentials: true
+      });
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
+  if (authLoading) {
+    return <div className="admin-container">Checking authentication...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <div className="admin-container">Access denied. Redirecting...</div>;
+  }
+
   return (
     <div className="admin-container">
-      <h1>Admin Panel</h1>
-      
+      <div className='admin-header'>
+        <h1>Admin Panel</h1>
+        <button onClick={handleLogout} className='logout-btn'>Logout</button>
+      </div>
       <div className="event-selector">
         <label htmlFor="event-select">Select Event: </label>
         <select

@@ -9,6 +9,8 @@ import Resources from './pages/Resources'
 import Events from './pages/events'
 import UserDashboard from './components/UserDashboard'
 import AdminPanel from './admin-panel/AdminPanel'
+import ProtectedRoute from './admin-panel/ProtectedRoutes'
+import Login from './admin-panel/Login'
 function App() {
 
   return (
@@ -23,9 +25,13 @@ function App() {
           <Route path = '/literature' element = {<Literature />}></Route> 
           <Route path = '/resources' element = {<Resources />}></Route>
           <Route path='/dashboard' element = {<UserDashboard />} />
-          <Route path='/admin' element = {<AdminPanel />} />
-          
-        </Routes>
+          <Route path='/login' element={ <Login /> } />
+          <Route path='/admin' element = {
+            <ProtectedRoute>
+              <AdminPanel />
+            </ProtectedRoute>
+            } />
+          </Routes>
       </BrowserRouter>
     </>
   )
