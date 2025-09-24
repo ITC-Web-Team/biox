@@ -56,12 +56,13 @@ const ProjectRegistration = () => {
   };
 
   return (
+    <div className="page-div">
     <div className="Register-container">
       {project ? (
         <>
           <h2 className="project.title">{project.title}</h2>
           <p className="project.mentor">Mentor: {project.mentor}</p>
-          <p className="project.description">{project.description}</p>
+          {/* <p className="project.description">{project.description}</p> */}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className= "nameContainer containers">
@@ -122,6 +123,7 @@ const ProjectRegistration = () => {
       ) : (
         <p>Loading project details...</p>
       )}
+    </div>
     </div>
   );
 };
