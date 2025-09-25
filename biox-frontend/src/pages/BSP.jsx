@@ -9,7 +9,7 @@ const BSP = () => {
 
   // Fetch projects
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/projects/')
+    fetch('http://127.0.0.1:8000/api/projects/')
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(err => console.error(err));

@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'corsheaders',
-    'rest_framework',
     'rest_framework_simplejwt',
 ]
 

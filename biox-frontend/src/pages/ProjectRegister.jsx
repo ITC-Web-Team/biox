@@ -14,7 +14,7 @@ const ProjectRegistration = () => {
 
   // fetch project details
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/projects/${projectId}/`)
+    fetch(`http://127.0.0.1:8000/api/projects/${projectId}/`)
       .then((res) => res.json())
       .then((data) => setProject(data))
       .catch((err) => console.error("Error fetching project:", err));
@@ -34,7 +34,7 @@ const ProjectRegistration = () => {
       ...formData
     };
 
-    fetch("http://127.0.0.1:8000/registrations/", {
+    fetch("http://127.0.0.1:8000/api/project-registrations/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

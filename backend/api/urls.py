@@ -18,6 +18,6 @@ urlpatterns = [
     # Project system URLs
     path('projects/', views.projects_list),   
     path('projects/<int:pk>/', views.project_detail),
-    path('project-registrations/', views.registrations_list),
-    path('project-registrations/<int:pk>/', views.registration_detail),
+    path('project-registrations/', views.project_registrations_list),
+    path('project-registrations/<int:pk>/', views.project_registration_detail),
 ]
