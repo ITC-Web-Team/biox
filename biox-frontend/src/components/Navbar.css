@@ -97,8 +97,8 @@
     border-radius: 1px;
 }
 
-/* Symposium Button */
-.symposium-button {
+/* Symposium Link */
+.symposium-link {
     font-family: 'Roboto Mono', Helvetica, sans-serif;
     font-size: 1rem;
     font-weight: 500;
@@ -116,14 +116,17 @@
     box-shadow: 0 4px 15px rgba(255, 46, 46, 0.3);
 }
 
-.symposium-button:hover {
+.symposium-link:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 25px rgba(255, 46, 46, 0.4);
     background: linear-gradient(135deg, var(--accent-1), var(--primary));
+    color: white;
 }
 
-.symposium-button:active {
-    transform: translateY(0);
+.symposium-link.active {
+    background: linear-gradient(135deg, var(--accent-2), var(--primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 7, 58, 0.4);
 }
 
 /* Mobile Menu Toggle */
@@ -284,8 +287,8 @@
         transform: translateX(5px);
     }
 
-    /* Mobile Symposium Button */
-    .symposium-button {
+    /* Mobile Symposium Link */
+    .symposium-link {
         width: 80%;
         margin: 1rem auto;
         padding: 1rem 2rem;
@@ -308,7 +311,7 @@
         gap: 2rem;
     }
     
-    .symposium-button {
+    .symposium-link {
         padding: 0.8rem 1.5rem;
         font-size: 0.9rem;
     }
@@ -371,7 +374,7 @@
 @media (prefers-reduced-motion: reduce) {
     #navbar,
     #navitems li a,
-    .symposium-button,
+    .symposium-link,
     .mobile-menu-toggle span,
     .logo {
         transition: none;
@@ -384,7 +387,7 @@
 
 /* Focus styles for accessibility */
 #navitems li a:focus,
-.symposium-button:focus,
+.symposium-link:focus,
 .mobile-menu-toggle:focus {
     outline: 2px solid var(--accent-1);
     outline-offset: 2px;

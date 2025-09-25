@@ -1,0 +1,36 @@
+/* Gallery Section */
+.gallery-section {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, #0A0A0A 0%, #141414 100%);
+}
+
+.gallery-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.gallery-title {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent-2, #FF073A);
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px rgba(255, 7, 58, 0.3);
+}
+
+.gallery-placeholder {
+  padding: 4rem 2rem;
+  background: linear-gradient(145deg, #1e1e1e, #161616);
+  border-radius: 16px;
+  border: 2px solid rgba(255, 46, 46, 0.2);
+}
+
+.gallery-placeholder p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  color: #cccccc;
+}

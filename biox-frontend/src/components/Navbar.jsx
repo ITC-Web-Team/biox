@@ -37,7 +37,7 @@ function Navbar() {
             <li><NavLink to="/team" onClick={closeMenu}>TEAM</NavLink></li>
             <li><NavLink to="/contact" onClick={closeMenu}>CONTACT</NavLink></li>
             <li><NavLink to="/BSP" onClick={closeMenu}>BSP</NavLink></li>
-            <button className="symposium-button" onClick={closeMenu}>SYMPOSIUM</button>
+            <li><NavLink to="/symposium" className="symposium-link" onClick={closeMenu}>SYMPOSIUM</NavLink></li>
         </ul>
 
         {/* Overlay to close menu when clicking outside */}

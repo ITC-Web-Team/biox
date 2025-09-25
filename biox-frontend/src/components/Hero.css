@@ -48,6 +48,16 @@
     animation: heroTextFloat 6s ease-in-out infinite;
 }
 
+.intro-text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    color: #cccccc;
+    line-height: 1.6;
+    margin: 2rem 0;
+    max-width: 600px;
+    font-weight: 400;
+}
+
 @keyframes heroTextFloat {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }

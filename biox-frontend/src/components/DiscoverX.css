@@ -1,0 +1,180 @@
+/* Discover Section */
+.discover-section {
+  padding: 8rem 0;
+  background: linear-gradient(135deg, #1A1A1A 0%, #0A0A0A 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.discover-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(255, 7, 58, 0.05) 0%, transparent 50%);
+}
+
+.discover-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.discover-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.discover-x-link {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-decoration: none;
+  padding: 2rem 3rem;
+  background: linear-gradient(145deg, rgba(255, 7, 58, 0.1), rgba(255, 7, 58, 0.05));
+  border: 3px solid var(--accent-2, #FF073A);
+  border-radius: 20px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.discover-x-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.discover-x-link:hover::before {
+  left: 100%;
+}
+
+.discover-x-link:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(255, 7, 58, 0.3);
+  background: linear-gradient(145deg, rgba(255, 7, 58, 0.2), rgba(255, 7, 58, 0.1));
+}
+
+.discover-title {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: white;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgba(255, 7, 58, 0.4),
+               0 0 20px rgba(255, 7, 58, 0.2);
+  position: relative;
+  z-index: 2;
+}
+
+.discover-icon {
+  font-size: 3rem;
+  color: var(--accent-2, #FF073A);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.discover-x-link:hover .discover-icon {
+  transform: rotate(15deg) scale(1.1);
+}
+
+.events-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #cccccc;
+  text-decoration: none;
+  padding: 1.5rem 2.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.events-link:hover {
+  color: var(--accent-2, #FF073A);
+  border-color: var(--accent-2, #FF073A);
+  transform: translateX(10px);
+  background: rgba(255, 7, 58, 0.05);
+}
+
+.events-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.events-link:hover .events-icon {
+  transform: translateX(5px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .discover-content {
+    flex-direction: column;
+    gap: 3rem;
+  }
+  
+  .discover-title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .discover-section {
+    padding: 6rem 0;
+  }
+  
+  .discover-title {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+  }
+  
+  .discover-x-link {
+    padding: 1.5rem 2rem;
+  }
+  
+  .events-link {
+    font-size: 1.2rem;
+    padding: 1.2rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .discover-title {
+    font-size: 2rem;
+    letter-spacing: 1px;
+  }
+  
+  .discover-x-link {
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
+  
+  .discover-icon {
+    font-size: 2.5rem;
+  }
+  
+  .events-link {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+  }
+}
