@@ -7,8 +7,8 @@ from django.http import HttpResponse, JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.decorators import method_decorator
-from .models import Event, EventRegistration, Team, Project, ProjectRegistration
-from .serializers import EventSerializer, EventRegistrationSerializer, TeamSerializer, ProjectSerializer, ProjectRegistrationSerializer
+from .models import Event, EventRegistration, Team, Project, ProjectRegistration, ContactMessage
+from .serializers import EventSerializer, EventRegistrationSerializer, TeamSerializer, ProjectSerializer, ProjectRegistrationSerializer, ContactMessageSerializer
 import pandas as pd
 import uuid
 
@@ -222,3 +222,18 @@ def project_registration_detail(request, pk):
     elif request.method == 'DELETE':
         registration.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# Contact Form Views (Public - No Authentication Required)
+@api_view(['POST'])
+def contact_message_create(request):
+    """Handle contact form submissions from the frontend"""
+    if request.method == 'POST':
+        serializer = ContactMessageSerializer(data=request.data)
+        if serializer.is_valid():
+            # Save the contact message
+            serializer.save()
+            return Response(
+                {"message": "Message sent successfully! We'll get back to you soon."}, 
+                status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

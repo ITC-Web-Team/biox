@@ -26,4 +26,7 @@ export const API_ENDPOINTS = {
   checkAdmin: `${API_BASE_URL}/api/auth/check_admin/`,
   login: `${API_BASE_URL}/api/auth/login/`,
   logout: `${API_BASE_URL}/api/auth/logout/`,
+  
+  // Contact System
+  contact: `${API_BASE_URL}/api/contact/`,
 };

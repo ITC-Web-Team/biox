@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300..700&display=swap');
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 :root {
@@ -9,35 +8,54 @@
     --accent-2: #FF073A;
 }
 
+/* Main Navbar Container */
 #navbar {
-    display: flex;
-    position: sticky;
-    height: 6rem;
-    width: 100%;
-    background-color: #1a1a1ab3; 
-    backdrop-filter: blur(24px);
-    color: white;
+    position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 6rem;
+    background-color: var(--nav-color); 
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    color: white;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    padding: 0 2rem;
+    transition: all 0.3s ease;
 }
 
+/* Navbar on scroll effect */
+#navbar.scrolled {
+    height: 4.5rem;
+    background-color: rgba(26, 26, 26, 0.95);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
 .logo {
-    padding: 0 6rem;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 2.5rem;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: 600;
     color: var(--primary);
-    line-height: normal;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Navigation Items */
 #navbar #navitems {
     list-style: none;
     display: flex;
     gap: 3rem;
-    padding: 0 6rem;
-    justify-content: center;
+    margin: 0;
+    padding: 0;
     align-items: center;
 }
 
@@ -45,21 +63,200 @@
     font-family: 'Roboto Mono', Helvetica, sans-serif;
     font-size: 1rem;
     font-weight: 400;
-    display: inline-block;
+    position: relative;
 }
 
-#navitems .active {
+#navitems li a {
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    position: relative;
+}
+
+#navitems li a:hover {
+    color: var(--accent-1);
+    background-color: rgba(255, 46, 46, 0.1);
+}
+
+#navitems .active a {
     font-size: 1.05rem;
     font-weight: 600;
     color: var(--accent-1);
 }
 
+#navitems .active a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background-color: var(--accent-1);
+    border-radius: 1px;
+}
+
+/* Symposium Button */
 .symposium-button {
-    all: unset;
     font-family: 'Roboto Mono', Helvetica, sans-serif;
     font-size: 1rem;
-    color: black;
-    padding: 1.2rem 3rem;
-    background-color: var(--primary);
+    font-weight: 500;
+    color: white;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent-1));
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(255, 46, 46, 0.3);
+}
+
+.symposium-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 46, 46, 0.4);
+    background: linear-gradient(135deg, var(--accent-1), var(--primary));
+}
+
+.symposium-button:active {
+    transform: translateY(0);
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 0.5rem;
+    gap: 4px;
+    background: none;
+    border: none;
+    z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    #navbar {
+        padding: 0 1rem;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    #navbar #navitems {
+        position: fixed;
+        top: 6rem;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 6rem);
+        background-color: rgba(26, 26, 26, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 2rem;
+        padding: 3rem 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    #navbar #navitems.mobile-open {
+        transform: translateX(0);
+    }
+    
+    #navitems li {
+        font-size: 1.2rem;
+    }
+    
+    #navitems li a {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+    
+    .symposium-button {
+        font-size: 1.1rem;
+        padding: 1.2rem 2.5rem;
+        margin-top: 1rem;
+    }
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #navbar {
+        padding: 0 1.5rem;
+    }
+    
+    #navbar #navitems {
+        gap: 2rem;
+    }
+    
+    .symposium-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Large Screen Optimization */
+@media (min-width: 1200px) {
+    #navbar {
+        padding: 0 4rem;
+    }
+    
+    #navbar #navitems {
+        gap: 4rem;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    #navbar,
+    #navitems li a,
+    .symposium-button,
+    .mobile-menu-toggle span,
+    .logo {
+        transition: none;
+    }
+    
+    #navbar #navitems {
+        transition: none;
+    }
+}
+
+/* Focus styles for accessibility */
+#navitems li a:focus,
+.symposium-button:focus,
+.mobile-menu-toggle:focus {
+    outline: 2px solid var(--accent-1);
+    outline-offset: 2px;
+}
+
+/* Smooth scroll offset compensation */
+html {
+    scroll-padding-top: 6rem;
 }
 

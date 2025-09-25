@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import './TeamRegistration.css';
+import { API_ENDPOINTS } from "../config/api";
+import { getCSRFToken } from "../config/csrf";
 
 const TeamRegistration = ({ event, onClose, onRegister }) => {
   const [teamName, setTeamName] = useState("");
@@ -39,37 +41,49 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
     e.preventDefault();
     
     try {
-      const teamResponse = await axios.post('http://localhost:8000/api/teams/create_team/', {
+      // Get CSRF token for secure submission
+      const csrfToken = await getCSRFToken();
+      
+      // Configure headers for Django backend
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(csrfToken && { 'X-CSRFToken': csrfToken })
+        }
+      };
+
+      // Create team first
+      const teamResponse = await axios.post(`${API_ENDPOINTS.teams}create_team/`, {
         team_name: teamName,
         event_id: event.event_id
-      });
+      }, config);
 
       const teamId = teamResponse.data.team_id;
 
+      // Register all team members
       for (const member of teamMembers) {
-        await axios.post('http://localhost:8000/api/registrations/', {
+        await axios.post(API_ENDPOINTS.eventRegistrations, {
           name: member.name,
           email: member.email,
           phone: member.phone,
           ldap_id: member.ldap_id,
-          is_team_leader: member.is_leader, // Changed from is_leader to match model
+          is_team_leader: member.is_leader,
           event_id: event.event_id,
           team_id: teamId
-        });
+        }, config);
       }
       
       alert('Team registration successful!');
       onRegister();
       onClose();
     } catch (error) {
-      console.error('Registration error', error);
+      console.error('Team registration error:', error);
       
       if (error.response) {
-        console.log('Error response:', error.response.data);
-        console.log('Error status:', error.response.status);
-        alert(`Registration failed: ${error.response.data.error || error.response.data}`);
+        console.error('Backend response:', error.response.data);
+        alert(`Registration failed: ${error.response.data.error || error.response.data.message || 'Server error'}`);
       } else {
-        alert('Registration failed. Please try again.');
+        alert('Registration failed. Please check your connection and try again.');
       }
     }
   };

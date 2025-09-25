@@ -60,3 +60,18 @@ class ProjectRegistration(models.Model):
 
     def __str__(self):
         return f"{self.student_name} - {self.project.title}"
+
+# Contact model for contact form submissions
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200, blank=True, null=True)
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-submitted_at']
+
+    def __str__(self):
+        return f"{self.name} - {self.subject or 'No Subject'}"

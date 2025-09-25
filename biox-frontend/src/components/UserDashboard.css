@@ -1,40 +1,348 @@
+/* User Dashboard Styles */
 .dashboard-container {
-  padding: 20px;
-  max-width: 800px;
+  min-height: 100vh;
+  background: var(--bg-color);
+  padding: 8rem 2rem 2rem;
+  max-width: 1000px;
   margin: 0 auto;
+  color: white;
+  position: relative;
 }
 
+.dashboard-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 70%, rgba(255, 46, 46, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 70% 30%, rgba(244, 43, 2, 0.05) 0%, transparent 50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.dashboard-title {
+  font-family: "Bricolage Grotesque", Helvetica, sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--accent-2);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(255, 7, 58, 0.3);
+}
+
+.dashboard-subtitle {
+  font-family: 'Roboto Mono', monospace;
+  color: #cccccc;
+  font-size: 1.1rem;
+}
+
+/* Search Form */
 .search-form {
   display: flex;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  background: linear-gradient(145deg, #1e1e1e, #161616);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 46, 46, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .search-form input {
   flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 1rem 1.5rem;
+  border: 2px solid rgba(255, 46, 46, 0.3);
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: white;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-form input:focus {
+  outline: none;
+  border-color: var(--accent-2);
+  box-shadow: 0 0 10px rgba(255, 7, 58, 0.3);
+}
+
+.search-form input::placeholder {
+  color: #888;
+  font-style: italic;
 }
 
 .search-form button {
-  padding: 10px 20px;
-  background-color: #4CAF50;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  white-space: nowrap;
 }
 
+.search-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+  background: linear-gradient(135deg, #45a049, #4CAF50);
+}
+
+.search-form button:active {
+  transform: translateY(0);
+}
+
+/* Registrations List */
 .registrations-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1.5rem;
 }
 
+/* Registration Card */
 .registration-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  background-color: #f9f9f9;
+  background: linear-gradient(145deg, #1e1e1e, #161616);
+  border: 1px solid rgba(255, 46, 46, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.registration-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 46, 46, 0.05), transparent);
+  transition: left 0.6s ease;
+}
+
+.registration-card:hover::before {
+  left: 100%;
+}
+
+.registration-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(255, 46, 46, 0.2);
+  border-color: rgba(255, 46, 46, 0.3);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.event-name {
+  font-family: "Bricolage Grotesque", Helvetica, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-2);
+  margin: 0;
+  text-shadow: 0 0 10px rgba(255, 7, 58, 0.3);
+}
+
+.registration-date {
+  font-family: 'Roboto Mono', monospace;
+  color: #ccc;
+  font-size: 0.9rem;
+  background: rgba(255, 46, 46, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--accent-2);
+}
+
+/* Card Content */
+.card-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  color: #cccccc;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.3rem;
+}
+
+.info-value {
+  font-size: 1rem;
+  color: white;
+  font-weight: 500;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status-confirmed {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+}
+
+.status-pending {
+  background: linear-gradient(135deg, #FF9800, #F57C00);
+  color: white;
+}
+
+.status-cancelled {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  color: white;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #888;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: var(--accent-2);
+}
+
+.empty-message {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+.empty-submessage {
+  font-size: 1rem;
+  color: #888;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  color: #ccc;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 46, 46, 0.3);
+  border-top: 3px solid var(--accent-2);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 7rem 1rem 2rem;
+  }
+
+  .search-form {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .search-form button {
+    width: 100%;
+    padding: 1.2rem;
+  }
+
+  .registration-card {
+    padding: 1.5rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .card-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .info-item {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 46, 46, 0.05);
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 7rem 0.5rem 2rem;
+  }
+
+  .registration-card {
+    padding: 1rem;
+  }
+
+  .event-name {
+    font-size: 1.2rem;
+  }
+
+  .registration-date {
+    font-size: 0.8rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .registration-card,
+  .search-form button,
+  .loading-spinner {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Focus styles for accessibility */
+.search-form input:focus,
+.search-form button:focus {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 2px;
 }

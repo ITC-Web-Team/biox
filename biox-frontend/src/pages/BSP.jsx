@@ -31,7 +31,7 @@ const BSP = () => {
   };
 
   return (
-    <div>
+    <div className="bsp-page">
       <h2 >Available Projects</h2>
       <div className="projects-container">
         {projects.map(project => (

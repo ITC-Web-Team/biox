@@ -1,47 +1,332 @@
+/* Admin Panel Styles */
 .admin-container {
-  padding: 20px;
+  min-height: 100vh;
+  background: var(--bg-color);
+  padding: 8rem 2rem 2rem;
+  color: white;
   position: relative;
-  z-index: 1;
 }
 
+.admin-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 80%, rgba(255, 46, 46, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(244, 43, 2, 0.05) 0%, transparent 50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Admin Header */
+.admin-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.admin-title {
+  font-family: "Bricolage Grotesque", Helvetica, sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--accent-2);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(255, 7, 58, 0.3);
+}
+
+.admin-subtitle {
+  font-family: 'Roboto Mono', monospace;
+  color: #cccccc;
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+
+/* Event Selector */
 .event-selector {
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 1.5rem;
+  background: linear-gradient(145deg, #1e1e1e, #161616);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 46, 46, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 2;
 }
 
+.event-selector label {
+  font-family: 'Roboto Mono', monospace;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
 .event-selector select {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: 2px solid rgba(255, 46, 46, 0.3);
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: white;
   cursor: pointer;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1rem;
+  transition: all 0.3s ease;
   z-index: 1000;
 }
 
+.event-selector select:focus {
+  outline: none;
+  border-color: var(--accent-2);
+  box-shadow: 0 0 10px rgba(255, 7, 58, 0.3);
+}
+
+.event-selector select option {
+  background: #1a1a1a;
+  color: white;
+  padding: 0.5rem;
+}
+
+/* Export Button */
 .export-btn {
-  padding: 8px 16px;
-  background-color: #4CAF50;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  white-space: nowrap;
+}
+
+.export-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+  background: linear-gradient(135deg, #45a049, #4CAF50);
+}
+
+.export-btn:active {
+  transform: translateY(0);
+}
+
+/* Table Container */
+.registrations-table {
+  background: linear-gradient(145deg, #1e1e1e, #161616);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 46, 46, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  margin-bottom: 2rem;
 }
 
 .registrations-table table {
   width: 100%;
   border-collapse: collapse;
-}
-
-.registrations-table th,
-.registrations-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .registrations-table th {
-  background-color: #f2f2f2;
+  background: linear-gradient(135deg, var(--accent-2), var(--primary));
+  color: white;
+  padding: 1.5rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.registrations-table td {
+  padding: 1.2rem 1rem;
+  text-align: left;
+  color: #cccccc;
+  border-bottom: 1px solid rgba(255, 46, 46, 0.1);
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.registrations-table tbody tr:hover td {
+  background-color: rgba(255, 46, 46, 0.05);
+}
+
+.registrations-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Responsive Table */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #888;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: var(--accent-2);
+}
+
+.empty-message {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+.empty-submessage {
+  font-size: 1rem;
+  color: #888;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  color: #ccc;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 46, 46, 0.3);
+  border-top: 3px solid var(--accent-2);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 1rem;
+}
+
+/* Stats Cards */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: linear-gradient(145deg, #1e1e1e, #161616);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 46, 46, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent-2);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-family: 'Roboto Mono', monospace;
+  color: #ccc;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 7rem 1rem 2rem;
+  }
+
+  .event-selector {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .event-selector label {
+    text-align: center;
+  }
+
+  .export-btn {
+    width: 100%;
+    padding: 1.2rem;
+  }
+
+  .registrations-table th,
+  .registrations-table td {
+    padding: 1rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-container {
+    padding: 7rem 0.5rem 2rem;
+  }
+
+  .event-selector {
+    margin: 0 0.5rem 2rem;
+  }
+
+  .registrations-table {
+    margin: 0 0.5rem 2rem;
+    font-size: 0.7rem;
+  }
+
+  .registrations-table th,
+  .registrations-table td {
+    padding: 0.8rem 0.3rem;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+    margin: 0 0.5rem 2rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .export-btn,
+  .stat-card,
+  .loading-spinner {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Focus styles for accessibility */
+.export-btn:focus,
+.event-selector select:focus {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 2px;
 }

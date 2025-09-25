@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Event, EventRegistration, Team, Project, ProjectRegistration
+from .models import Event, EventRegistration, Team, Project, ProjectRegistration, ContactMessage
 
 # Event system serializers
 class EventSerializer(serializers.ModelSerializer):
@@ -72,3 +72,9 @@ class ProjectRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectRegistration
         fields = '__all__'
+
+# Contact system serializer
+class ContactMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactMessage
+        fields = ['name', 'email', 'subject', 'message']  # Don't expose internal fields

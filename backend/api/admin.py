@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, EventRegistration, Team, Project, ProjectRegistration
+from .models import Event, EventRegistration, Team, Project, ProjectRegistration, ContactMessage
 
 # Event system admin
 @admin.register(Event)
@@ -31,3 +31,20 @@ class ProjectRegistrationAdmin(admin.ModelAdmin):
   list_display = ('student_name', 'student_email', 'project')
   search_fields = ('student_name', 'student_email', 'project__title')
   list_filter = ('project',)
+
+# Contact system admin
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+  list_display = ('name', 'email', 'subject', 'submitted_at', 'is_read')
+  search_fields = ('name', 'email', 'subject')
+  list_filter = ('submitted_at', 'is_read')
+  readonly_fields = ('submitted_at',)
+  actions = ['mark_as_read', 'mark_as_unread']
+
+  def mark_as_read(self, request, queryset):
+    queryset.update(is_read=True)
+  mark_as_read.short_description = "Mark selected messages as read"
+
+  def mark_as_unread(self, request, queryset):
+    queryset.update(is_read=False)
+  mark_as_unread.short_description = "Mark selected messages as unread"

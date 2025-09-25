@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { API_BASE_URL } from "../config/api";
+import axios from "axios";
+import { API_ENDPOINTS } from "../config/api";
+import { getCSRFToken } from "../config/csrf";
 import "./ProjectRegister.css"
 const ProjectRegistration = () => {
   const { projectId } = useParams(); // project id from URL
@@ -15,10 +17,16 @@ const ProjectRegistration = () => {
 
   // fetch project details
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/projects/${projectId}/`)
-      .then((res) => res.json())
-      .then((data) => setProject(data))
-      .catch((err) => console.error("Error fetching project:", err));
+    const fetchProject = async () => {
+      try {
+        const response = await axios.get(`${API_ENDPOINTS.projects}${projectId}/`);
+        setProject(response.data);
+      } catch (error) {
+        console.error("Error fetching project:", error);
+      }
+    };
+    
+    fetchProject();
   }, [projectId]);
 
   // handle input changes
@@ -27,33 +35,38 @@ const ProjectRegistration = () => {
   };
 
   // submit form
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = {
-      project: projectId, // backend expects project ID
-      ...formData
-    };
+    try {
+      const payload = {
+        project: projectId, // backend expects project ID
+        ...formData
+      };
 
-    fetch(`${API_BASE_URL}/api/project-registrations/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
-      .then((res) => {
-        if (res.ok) {
-          setStatus(" Registered successfully!");
-          setFormData({ student_name: "", student_email: "", student_phoneno: "" });
-        } else {
-          setStatus("Failed to register. Try again.");
+      // Get CSRF token for secure submission
+      const csrfToken = await getCSRFToken();
+      
+      // Configure headers for Django backend
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(csrfToken && { 'X-CSRFToken': csrfToken })
         }
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-        setStatus(" Error submitting form.");
-      });
+      };
+
+      const response = await axios.post(API_ENDPOINTS.projectRegistrations, payload, config);
+      setStatus("Registered successfully!");
+      setFormData({ student_name: "", student_email: "", student_phoneno: "", student_sop: "" });
+    } catch (error) {
+      console.error("Registration error:", error);
+      if (error.response) {
+        console.error("Backend response:", error.response.data);
+        setStatus(`Registration failed: ${error.response.data.message || 'Server error'}`);
+      } else {
+        setStatus("Registration failed. Please check your connection and try again.");
+      }
+    }
   };
 
   return (

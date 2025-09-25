@@ -1,9 +1,105 @@
+/* Home Page Styles */
 :root {
     --bg-color: #141414;
+    --primary: #FF2E2E;
+    --accent-1: #F42B02;
+    --accent-2: #FF073A;
+    --text-light: #ffffff;
+    --text-muted: #cccccc;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-color);
+/* Home Page Container */
+.home-container {
+    min-height: 100vh;
+    background: var(--bg-color);
+    position: relative;
+}
+
+/* Background Effects */
+.home-container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 80%, rgba(255, 46, 46, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(244, 43, 2, 0.1) 0%, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Section Spacing */
+.home-section {
+    padding: 2rem 0;
+    min-height: calc(100vh - 6rem);
+}
+
+.home-section:first-of-type {
+    padding-top: 6rem; /* Account for navbar */
+}
+
+/* Responsive Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Loading Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Responsive Typography */
+.responsive-text {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    line-height: 1.6;
+}
+
+/* Mobile-first responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .home-section {
+        min-height: auto;
+        padding: 1rem 0;
+    }
+    
+    .home-section:first-of-type {
+        padding-top: 7rem; /* Extra space for mobile */
+    }
+}
+
+/* Tablet styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+}
+
+/* Large screen optimization */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+        padding: 0 3rem;
+    }
 }

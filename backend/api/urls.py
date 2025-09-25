@@ -23,4 +23,7 @@ urlpatterns = [
     path('projects/<int:pk>/', views.project_detail),
     path('project-registrations/', views.project_registrations_list),
     path('project-registrations/<int:pk>/', views.project_registration_detail),
+    
+    # Contact system URLs
+    path('contact/', views.contact_message_create, name='contact_create'),
 ]

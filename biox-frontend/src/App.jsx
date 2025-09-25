@@ -12,6 +12,8 @@ import ProtectedRoute from './admin-panel/ProtectedRoutes'
 import Login from './admin-panel/Login'
 import BSP from './pages/BSP'
 import ProjectRegister from './pages/ProjectRegister'
+import Contact from './pages/Contact'
+import Blog from './pages/Blog'
 function App() {
 
   return (
@@ -33,6 +35,8 @@ function App() {
             </ProtectedRoute>
             } />
           <Route path = '/BSP' element = {<BSP/>}></Route>
+          <Route path = '/contact' element = {<Contact/>}></Route>
+          <Route path = '/blog' element = {<Blog/>}></Route>
           <Route path = '/Register/:projectId' element = {<ProjectRegister/>}></Route>
           <Route path="/test/:Id" element={<h1>Test Works!</h1>} />
         </Routes>

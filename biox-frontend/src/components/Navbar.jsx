@@ -13,7 +13,7 @@ function Navbar() {
             <li><NavLink to="/blog">BLOG</NavLink></li>
             <li><NavLink to="/resources">RESOURCES</NavLink></li>
             <li><NavLink to="/team">TEAM</NavLink></li>
-            <li><NavLink to="/contact">CONATCT</NavLink></li>
+            <li><NavLink to="/contact">CONTACT</NavLink></li>
             <li><NavLink to="/BSP">BSP</NavLink></li>
             <button className = "symposium-button">SYMPOSIUM</button>
         </ul>
