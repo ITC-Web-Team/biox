@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 
 function Navbar() {
@@ -14,6 +14,7 @@ function Navbar() {
             <li><NavLink to="/resources">RESOURCES</NavLink></li>
             <li><NavLink to="/team">TEAM</NavLink></li>
             <li><NavLink to="/contact">CONATCT</NavLink></li>
+            <li><NavLink to="/BSP">BSP</NavLink></li>
             <button className = "symposium-button">SYMPOSIUM</button>
         </ul>
     </nav>

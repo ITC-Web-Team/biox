@@ -1,4 +1,3 @@
-
 import './App.css'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -11,6 +10,8 @@ import UserDashboard from './components/UserDashboard'
 import AdminPanel from './admin-panel/AdminPanel'
 import ProtectedRoute from './admin-panel/ProtectedRoutes'
 import Login from './admin-panel/Login'
+import BSP from './pages/BSP'
+import ProjectRegister from './pages/ProjectRegister'
 function App() {
 
   return (
@@ -31,7 +32,10 @@ function App() {
               <AdminPanel />
             </ProtectedRoute>
             } />
-          </Routes>
+          <Route path = '/BSP' element = {<BSP/>}></Route>
+          <Route path = '/Register/:projectId' element = {<ProjectRegister/>}></Route>
+          <Route path="/test/:Id" element={<h1>Test Works!</h1>} />
+        </Routes>
       </BrowserRouter>
     </>
   )

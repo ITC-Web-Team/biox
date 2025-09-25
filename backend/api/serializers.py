@@ -1,19 +1,20 @@
 from rest_framework import serializers
-from .models import Event, Registration, Team
+from .models import Event, EventRegistration, Team, Project, ProjectRegistration
 
+# Event system serializers
 class EventSerializer(serializers.ModelSerializer):
   class Meta:
     model = Event
     fields = '__all__'
 
-class RegistrationSerializer(serializers.ModelSerializer):
+class EventRegistrationSerializer(serializers.ModelSerializer):
     event_title = serializers.CharField(source='event.title', read_only=True)
     team_name = serializers.CharField(source='team.team_name', read_only=True)
     event_id = serializers.CharField(write_only=True, required=True)
     team_id = serializers.CharField(write_only=True, required=False, allow_null=True)
 
     class Meta:
-        model = Registration
+        model = EventRegistration
         fields = '__all__'
         extra_kwargs = {
             'event': {'read_only': True},
@@ -39,7 +40,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'team_id': 'Team not found'})
         
         email = validated_data['email']
-        if Registration.objects.filter(event=event, email=email).exists():
+        if EventRegistration.objects.filter(event=event, email=email).exists():
             raise serializers.ValidationError({'email': 'This email is already registered for this event.'})
         
         return super().create(validated_data)
@@ -48,3 +49,26 @@ class TeamSerializer(serializers.ModelSerializer):
   class Meta:
     model = Team
     fields = '__all__'
+
+# Project system serializers
+class ProjectSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Project
+        fields = '__all__'
+    
+    def get_image(self, obj):
+        if not obj.image:
+            return None
+        request = self.context.get('request')
+        if request:
+            # Build full URL including host
+            return request.build_absolute_uri(obj.image.url)
+        # fallback to relative url
+        return obj.image.url
+
+class ProjectRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjectRegistration
+        fields = '__all__'

@@ -1,0 +1,139 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.page-div {
+  display: flex;
+  justify-content: center;     
+  align-items: center;        
+  min-height: 100vh;           
+  background: #000;            
+  padding: 20px;               
+}
+
+
+.Register-container {
+  width: 100%;
+  max-width: 600px;
+  background-color: #111; 
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.25);
+  color: #f5f5f5;
+  font-family: monospace;
+  padding: 25px 20px;
+}
+
+.Register-container h2 {
+  font-size: 30px;
+  color: #ff2c2c; 
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+
+.Register-container p {
+  font-size: 1rem;
+  color: #bbb;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.containers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.containers div {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #f5f5f5;
+  text-align:left;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #1a1a1a;
+  color: white;
+  font-size: 1rem;
+  font-family: monospace;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border: 1px solid #ff2c2c;
+  box-shadow: 0 0 6px rgba(255, 44, 44, 0.6);
+}
+
+
+.inputSop {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.Register-btn {
+  background-color: #ff2c2c;
+  color: white;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.Register-btn:hover {
+  background-color: #d41f1f;
+  transform: scale(1.02);
+}
+
+
+.mt-4 {
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ff2c2c;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .Register-container {
+    padding: 20px;
+  }
+
+  .Register-container h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .Register-container {
+    padding: 15px;
+  }
+
+  input, textarea {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .Register-btn {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}
