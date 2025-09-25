@@ -73,7 +73,7 @@ const Footer = () => {
         <div className="footer-container">
           <div className="footer-bottom-content">
             <p>&copy; 2025 BioX - IIT Bombay. All rights reserved.</p>
-            <p>Made with ❤️ by the BioX team</p>
+            <p>Made with ❤️ by the Web team, ITC</p>
           </div>
         </div>
       </div>
