@@ -2,11 +2,15 @@
 import './App.css'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
-import {BrowserRouter, Routes, Route} from 'react-router'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Team from './pages/Team'
 import Literature from './pages/literature'
 import Resources from './pages/Resources'
 import Events from './pages/events'
+import UserDashboard from './components/UserDashboard'
+import AdminPanel from './admin-panel/AdminPanel'
+import ProtectedRoute from './admin-panel/ProtectedRoutes'
+import Login from './admin-panel/Login'
 function App() {
 
   return (
@@ -20,8 +24,14 @@ function App() {
 
           <Route path = '/literature' element = {<Literature />}></Route> 
           <Route path = '/resources' element = {<Resources />}></Route>
-          
-        </Routes>
+          <Route path='/dashboard' element = {<UserDashboard />} />
+          <Route path='/login' element={ <Login /> } />
+          <Route path='/admin' element = {
+            <ProtectedRoute>
+              <AdminPanel />
+            </ProtectedRoute>
+            } />
+          </Routes>
       </BrowserRouter>
     </>
   )
