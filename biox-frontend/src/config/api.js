@@ -10,6 +10,9 @@ const getApiBaseUrl = () => {
 
 export const API_BASE_URL = getApiBaseUrl();
 export const API_ENDPOINTS = {
+  // CSRF Token
+  csrf: `${API_BASE_URL}/api/csrf/`,
+  
   // Event System (Admin Required)
   events: `${API_BASE_URL}/api/events/`,
   eventRegistrations: `${API_BASE_URL}/api/event-registrations/`,

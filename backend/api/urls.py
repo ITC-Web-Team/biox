@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import EventViewSet, EventRegistrationViewSet, TeamViewSet, check_admin, logout_view
+from .views import EventViewSet, EventRegistrationViewSet, TeamViewSet, check_admin, logout_view, csrf_token
 from . import views
 
 # Event system router
@@ -10,6 +10,9 @@ router.register(r'event-registrations', EventRegistrationViewSet)
 router.register(r'teams', TeamViewSet)
 
 urlpatterns = [
+    # CSRF Token
+    path('csrf/', csrf_token, name='csrf_token'),
+    
     # Event system URLs
     path('', include(router.urls)),
     path('auth/check_admin/', check_admin, name='check_admin'),

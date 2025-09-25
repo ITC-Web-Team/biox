@@ -3,11 +3,21 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action, permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
 from .models import Event, EventRegistration, Team, Project, ProjectRegistration
 from .serializers import EventSerializer, EventRegistrationSerializer, TeamSerializer, ProjectSerializer, ProjectRegistrationSerializer
 import pandas as pd
 import uuid
+
+# CSRF Token endpoint
+@ensure_csrf_cookie
+@api_view(['GET'])
+def csrf_token(request):
+    """Return CSRF token for frontend"""
+    return JsonResponse({'csrfToken': get_token(request)})
 
 class EventViewSet(viewsets.ModelViewSet):
   queryset = Event.objects.all()

@@ -28,6 +28,16 @@ DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = ['bioxb.tech-iitb.org', 'www.bioxb.tech-iitb.org', 'biox.tech-iitb.org', 'www.biox.tech-iitb.org', 'localhost', '127.0.0.1', '*']
 
+# CSRF Protection - Add trusted origins for cross-site requests
+CSRF_TRUSTED_ORIGINS = [
+    'https://biox.tech-iitb.org',
+    'https://www.biox.tech-iitb.org',
+    'https://bioxb.tech-iitb.org', 
+    'https://www.bioxb.tech-iitb.org',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+]
+
 
 # Application definition
 
@@ -75,6 +85,24 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.biox.tech-iitb.org",
     "https://bioxb.tech-iitb.org",
     "https://www.bioxb.tech-iitb.org",
+]
+
+# Additional CORS settings for better compatibility
+CORS_ALLOW_ALL_ORIGINS = False  # Keep this False for security
+CORS_ALLOWED_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+CORS_EXPOSE_HEADERS = [
+    'x-csrftoken',
 ]
 
 
