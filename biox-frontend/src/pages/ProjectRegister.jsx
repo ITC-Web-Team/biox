@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../config/api";
 import "./ProjectRegister.css"
 const ProjectRegistration = () => {
   const { projectId } = useParams(); // project id from URL
@@ -14,7 +15,7 @@ const ProjectRegistration = () => {
 
   // fetch project details
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/projects/${projectId}/`)
+    fetch(`${API_BASE_URL}/api/projects/${projectId}/`)
       .then((res) => res.json())
       .then((data) => setProject(data))
       .catch((err) => console.error("Error fetching project:", err));
@@ -34,7 +35,7 @@ const ProjectRegistration = () => {
       ...formData
     };
 
-    fetch("http://127.0.0.1:8000/api/project-registrations/", {
+    fetch(`${API_BASE_URL}/api/project-registrations/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

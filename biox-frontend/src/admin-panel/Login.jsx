@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_ENDPOINTS } from '../config/api';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -10,12 +11,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://127.0.0.1:8000/api/auth/login/', formData, {
+      await axios.post(API_ENDPOINTS.login, formData, {
         withCredentials: true
       });
       
       // Check if user is admin
-      const checkResponse = await axios.get('http://127.0.0.1:8000/api/auth/check_admin/', {
+      const checkResponse = await axios.get(API_ENDPOINTS.checkAdmin, {
         withCredentials: true
       });
       

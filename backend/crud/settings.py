@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7=3d65&nwfpd=nzmnm12w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = ['bioxb.tech-iitb.org', 'localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['bioxb.tech-iitb.org', 'www.bioxb.tech-iitb.org', 'biox.tech-iitb.org', 'www.biox.tech-iitb.org', 'localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -67,8 +67,12 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
+    # Local development
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    # Production domains
+    "https://biox.tech-iitb.org",
+    "https://www.biox.tech-iitb.org",
     "https://bioxb.tech-iitb.org",
     "https://www.bioxb.tech-iitb.org",
 ]

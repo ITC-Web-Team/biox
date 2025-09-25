@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_ENDPOINTS, API_BASE_URL } from '../config/api';
 import './AdminPanel.css';
 
 const AdminPanel = () => {
@@ -20,7 +21,7 @@ const AdminPanel = () => {
   const checkAuthentication = async () => {
     try {
       // Check if user is authenticated and is admin/staff
-      const response = await axios.get('http://127.0.0.1:8000/api/auth/check_admin/', {
+      const response = await axios.get(API_ENDPOINTS.checkAdmin, {
         withCredentials: true // Important for session/cookie auth
       });
       
@@ -40,7 +41,7 @@ const AdminPanel = () => {
 
   // Add authentication headers to all requests
   const authAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/',
+    baseURL: `${API_BASE_URL}/api/`,
     withCredentials: true,
   });
 
@@ -93,7 +94,7 @@ const AdminPanel = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://127.0.0.1:8000/api/auth/logout/', {}, {
+      await axios.post(API_ENDPOINTS.logout, {}, {
         withCredentials: true
       });
       navigate('/login');

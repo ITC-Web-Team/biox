@@ -1,6 +1,7 @@
 import './BSP.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { API_ENDPOINTS } from "../config/api";
 
 const BSP = () => {
   const [projects, setProjects] = useState([]);
@@ -9,7 +10,7 @@ const BSP = () => {
 
   // Fetch projects
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/projects/')
+    fetch(API_ENDPOINTS.projects)
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(err => console.error(err));
