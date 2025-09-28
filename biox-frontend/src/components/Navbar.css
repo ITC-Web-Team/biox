@@ -43,6 +43,7 @@
     text-decoration: none;
     transition: transform 0.3s ease;
     cursor: pointer;
+    margin-bottom: 0;
 }
 
 .logo:hover {
@@ -334,11 +335,13 @@
 
     .logo {
         font-size: 1.6rem;
+        margin-left: 0.8rem;
     }
 
     .hamburger {
         width: 25px;
         height: 20px;
+        margin-right: 0.6rem;
     }
 
     .hamburger-line {

@@ -318,6 +318,12 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .info-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+        align-items: center;
+    }
     .contact-container {
         padding: 7rem 0 2rem 0;
     }
