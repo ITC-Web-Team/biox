@@ -1,92 +1,193 @@
-/* .card_cont{
-    border: 2px solid;
-    height: 10px;
-    width: 60%;
-}
-.card_image{
-    
-   
-    
-   
-    border: 2px solid green;
-    border-radius: 50%;
-    padding: 1rem;
-}
-.card_image_cont{
-  
-}
-.card_bottom{
-    
-    font-size: 30px;
-    height: 30%;
-    border: 2px solid;
-    
-
-}
-h3,h2{
-    margin: 0;
-    align-items: center;
-} */
+/* Team Card Styles */
 .team_card {
-    width: 30rem;
-    background-color: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-    height: 40rem;
+  background: linear-gradient(145deg, #1e1e1e, #161616);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  max-width: 320px;
+  width: 100%;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  margin: 15px auto;
+  cursor: pointer;
+  border: 1px solid rgba(255, 46, 46, 0.1);
+  position: relative;
+}
+
+/* Hover animation */
+.team_card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 40px rgba(255, 7, 58, 0.2);
+  border-color: rgba(255, 46, 46, 0.3);
+}
+
+/* Image container */
+.card_image_cont {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+}
+
+.team_card_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.4s ease;
+}
+
+.team_card:hover .team_card_image {
+  transform: scale(1.08);
+}
+
+/* Bottom content */
+.team_card_bottom {
+  padding: 1.5rem;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.member_name {
+  font-family: "Bricolage Grotesque", Helvetica, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--accent-2, #FF073A);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.member_position {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin: 0.3rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.member_department {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #cccccc;
+  margin: 0.3rem 0 1.5rem 0;
+  line-height: 1.4;
+}
+
+/* Social Links */
+.social_links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 46, 46, 0.1);
+  border: 2px solid var(--accent-2, #FF073A);
+  border-radius: 50%;
+  color: var(--accent-2, #FF073A);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social_link:hover {
+  background: var(--accent-2, #FF073A);
+  color: white;
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 5px 15px rgba(255, 7, 58, 0.4);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .team_card {
+    max-width: 90%;
+    margin: 10px auto;
+  }
+  
+  .member_name {
+    font-size: 1.1rem;
+  }
+  
+  .member_position {
+    font-size: 0.9rem;
+  }
+  
+  .member_department {
+    font-size: 0.8rem;
+  }
+  
+  .card_image_cont {
+    height: 240px;
   }
 
-  
-  .card_cont:hover {
-    transform: translateY(-5px);
+  .team_card_image {
+    object-position: center 20%;
   }
-  
-  
+
   .team_card_bottom {
-    padding: 2px;
-    height: 40%;
+    padding: 1rem;
   }
+
+  .social_links {
+    gap: 0.8rem;
+  }
+
+  .social_link {
+    width: 35px;
+    height: 35px;
+  }
+
+  .social_link svg {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .team_card {
+    max-width: 95%;
+  }
+  
   .card_image_cont {
-    width: 70%;
-    height: 70%;
-    margin: 0 auto;
-    margin-bottom: 3rem;
-    border-radius: 50%;
-    overflow: hidden;
-    
-    border: 3px solid #ddd; /* optional border */
+    height: 200px;
   }
   
   .team_card_image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+    object-position: center 15%;
   }
   
-  .team_card_bottom h2 {
-    margin: 10px 0 6px;
-    font-size: 50px;
-    font-weight: 600;
-    color: #1f2937;
+  .member_name {
+    font-size: 1rem;
   }
   
-  .team_card_bottom h3 {
-    margin: 4px 0;
-    font-size: 56px;
-    font-weight: 400;
-    color: #4b5563;
+  .member_position {
+    font-size: 0.8rem;
   }
   
-  .team_card_bottom a {
-    margin: 10px 10px 0;
-    color: #555;
-    transition: color 0.3s ease;
+  .member_department {
+    font-size: 0.75rem;
   }
-  
-  .team_card_bottom a:hover {
-    color: #0077b5; /* LinkedIn blue */
+
+  .social_link {
+    width: 32px;
+    height: 32px;
   }
-  
+
+  .social_link svg {
+    font-size: 18px !important;
+  }
+}

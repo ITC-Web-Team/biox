@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import './EventRegistration.css';
+import { API_ENDPOINTS } from "../config/api";
+import { getCSRFToken } from "../config/csrf";
 
 const EventRegistration = ({ event, onClose, onRegister }) => {
   const [formData, setFormData] = useState({
@@ -25,15 +27,32 @@ const EventRegistration = ({ event, onClose, onRegister }) => {
         event_id: event.event_id
       };
 
-      console.log('Sending data: ', registrationData);
+      console.log('Sending registration data: ', registrationData);
 
-      const response = await axios.post('http://localhost:8000/api/registrations/', registrationData);
+      // Get CSRF token for secure submission
+      const csrfToken = await getCSRFToken();
+      
+      // Configure headers for Django backend
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(csrfToken && { 'X-CSRFToken': csrfToken })
+        }
+      };
+
+      // Use proper API endpoint from configuration
+      const response = await axios.post(API_ENDPOINTS.eventRegistrations, registrationData, config);
       alert('Registration Successful!');
       onRegister();
       onClose();
     } catch(error) {
-      console.error('Registration error', error);
-      alert('Registration failed. Please try again.');
+      console.error('Registration error:', error);
+      if (error.response) {
+        console.error('Backend response:', error.response.data);
+        alert(`Registration failed: ${error.response.data.message || 'Server error'}`);
+      } else {
+        alert('Registration failed. Please check your connection and try again.');
+      }
     }
   };
 

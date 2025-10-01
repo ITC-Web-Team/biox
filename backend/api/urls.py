@@ -1,14 +1,29 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import EventViewSet, RegistrationViewSet, TeamViewSet, check_admin, logout_view
+from .views import EventViewSet, EventRegistrationViewSet, TeamViewSet, check_admin, logout_view, csrf_token
+from . import views
 
+# Event system router
 router = DefaultRouter()
 router.register(r'events', EventViewSet)
-router.register(r'registrations', RegistrationViewSet)
+router.register(r'event-registrations', EventRegistrationViewSet)
 router.register(r'teams', TeamViewSet)
 
 urlpatterns = [
-  path('', include(router.urls)),
-  path('auth/check_admin/', check_admin, name='check_admin'),
-  path('auth/logout/', logout_view, name='logout'),
+    # CSRF Token
+    path('csrf/', csrf_token, name='csrf_token'),
+    
+    # Event system URLs
+    path('', include(router.urls)),
+    path('auth/check_admin/', check_admin, name='check_admin'),
+    path('auth/logout/', logout_view, name='logout'),
+    
+    # Project system URLs
+    path('projects/', views.projects_list),   
+    path('projects/<int:pk>/', views.project_detail),
+    path('project-registrations/', views.project_registrations_list),
+    path('project-registrations/<int:pk>/', views.project_registration_detail),
+    
+    # Contact system URLs
+    path('contact/', views.contact_message_create, name='contact_create'),
 ]

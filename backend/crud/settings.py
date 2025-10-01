@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7=3d65&nwfpd=nzmnm12wv9o5!3l=(b()fh%p#!%6_s)kfez_i'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7=3d65&nwfpd=nzmnm12wv9o5!3l=(b()fh%p#!%6_s)kfez_i')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bioxb.tech-iitb.org', 'www.bioxb.tech-iitb.org', 'biox.tech-iitb.org', 'www.biox.tech-iitb.org', 'localhost', '127.0.0.1', '*']
+
+# CSRF Protection - Add trusted origins for cross-site requests
+CSRF_TRUSTED_ORIGINS = [
+    'https://biox.tech-iitb.org',
+    'https://www.biox.tech-iitb.org',
+    'https://bioxb.tech-iitb.org', 
+    'https://www.bioxb.tech-iitb.org',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:5174',
+    'http://127.0.0.1:5174',
+]
 
 
 # Application definition
@@ -37,9 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'api',
     'corsheaders',
-    'rest_framework',
     'rest_framework_simplejwt',
 ]
 
@@ -53,6 +66,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,8 +79,34 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
+    # Local development
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5174",
+    # Production domains
+    "https://biox.tech-iitb.org",
+    "https://www.biox.tech-iitb.org",
+    "https://bioxb.tech-iitb.org",
+    "https://www.bioxb.tech-iitb.org",
+]
+
+# Additional CORS settings for better compatibility
+CORS_ALLOW_ALL_ORIGINS = False  # Keep this False for security
+CORS_ALLOWED_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+CORS_EXPOSE_HEADERS = [
+    'x-csrftoken',
 ]
 
 
@@ -137,9 +177,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+] if os.path.exists(os.path.join(BASE_DIR, 'static')) else []
+
+# Configure WhiteNoise for static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'           
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

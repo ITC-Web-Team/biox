@@ -1,0 +1,121 @@
+/* Join Club Section */
+.join-club-section {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, #141414 0%, #1A1A1A 100%);
+  border-top: 1px solid rgba(255, 46, 46, 0.1);
+}
+
+.join-club-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.join-club-title {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent-2, #FF073A);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px rgba(255, 7, 58, 0.3),
+               0 0 10px rgba(255, 7, 58, 0.2),
+               0 0 15px rgba(255, 7, 58, 0.1);
+}
+
+.join-club-subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3rem;
+  color: #cccccc;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.join-links {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.join-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 2.5rem;
+  background: linear-gradient(145deg, #1e1e1e, #161616);
+  border: 2px solid rgba(255, 46, 46, 0.2);
+  border-radius: 16px;
+  color: white;
+  text-decoration: none;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  min-width: 280px;
+  justify-content: center;
+}
+
+.join-link:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 46, 46, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.instagram-link:hover {
+  background: linear-gradient(145deg, #E4405F, #C13584);
+  border-color: #E4405F;
+}
+
+.whatsapp-link:hover {
+  background: linear-gradient(145deg, #25D366, #128C7E);
+  border-color: #25D366;
+}
+
+.join-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .join-club-title {
+    font-size: 2.5rem;
+  }
+  
+  .join-club-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .join-links {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .join-link {
+    min-width: 250px;
+    padding: 1.2rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .join-club-title {
+    font-size: 2rem;
+  }
+  
+  .join-link {
+    min-width: 200px;
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .join-icon {
+    font-size: 1.3rem;
+  }
+}

@@ -1,21 +1,32 @@
+# Event Management System Views (with authentication)
 from rest_framework import viewsets, status
 from rest_framework.decorators import action, permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from django.http import HttpResponse
-from .models import Event, Registration, Team
-from .serializers import EventSerializer, RegistrationSerializer, TeamSerializer
+from django.http import HttpResponse, JsonResponse
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
+from .models import Event, EventRegistration, Team, Project, ProjectRegistration, ContactMessage
+from .serializers import EventSerializer, EventRegistrationSerializer, TeamSerializer, ProjectSerializer, ProjectRegistrationSerializer, ContactMessageSerializer
 import pandas as pd
 import uuid
+
+# CSRF Token endpoint
+@ensure_csrf_cookie
+@api_view(['GET'])
+def csrf_token(request):
+    """Return CSRF token for frontend"""
+    return JsonResponse({'csrfToken': get_token(request)})
 
 class EventViewSet(viewsets.ModelViewSet):
   queryset = Event.objects.all()
   serializer_class = EventSerializer
   permission_classes = [IsAuthenticated, IsAdminUser]
 
-class RegistrationViewSet(viewsets.ModelViewSet):
-  queryset = Registration.objects.all()
-  serializer_class = RegistrationSerializer
+class EventRegistrationViewSet(viewsets.ModelViewSet):
+  queryset = EventRegistration.objects.all()
+  serializer_class = EventRegistrationSerializer
   permission_classes = [IsAuthenticated, IsAdminUser]
 
   @action(detail=False, methods=['get'])
@@ -29,7 +40,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
         return Response({"error": "event_id parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
     
     # Filter by the event's event_id field
-    registrations = Registration.objects.filter(event__event_id=event_id)
+    registrations = EventRegistration.objects.filter(event__event_id=event_id)
     print(f"Found {registrations.count()} registrations")  # Debug
     
     serializer = self.get_serializer(registrations, many=True)
@@ -54,7 +65,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
               return Response({"error": f"Event with id {event_id} not found"}, status=status.HTTP_404_NOT_FOUND)
           
           # Get registrations
-          registrations = Registration.objects.filter(event__event_id=event_id)
+          registrations = EventRegistration.objects.filter(event__event_id=event_id)
           print(f"Found {registrations.count()} registrations for export")
           
           if registrations.count() == 0:
@@ -120,7 +131,7 @@ class TeamViewSet(viewsets.ModelViewSet):
         
         except Event.DoesNotExist:
             return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
-        
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -135,3 +146,94 @@ def logout_view(request):
     from django.contrib.auth import logout
     logout(request)
     return Response({'message': 'Logged out successfully'})
+
+
+# Project System Views (no authentication required)
+@api_view(['GET', 'POST'])
+def projects_list(request):
+    if request.method == 'GET':
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True, context={'request': request})
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = ProjectSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def project_detail(request, pk):
+    try:
+        project = Project.objects.get(pk=pk)
+    except Project.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ProjectSerializer(project)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = ProjectSerializer(project, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        project.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'POST'])
+def project_registrations_list(request):
+    if request.method == 'GET':
+        registrations = ProjectRegistration.objects.all()
+        serializer = ProjectRegistrationSerializer(registrations, many=True)
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = ProjectRegistrationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def project_registration_detail(request, pk):
+    try:
+        registration = ProjectRegistration.objects.get(pk=pk)
+    except ProjectRegistration.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ProjectRegistrationSerializer(registration)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = ProjectRegistrationSerializer(registration, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        registration.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+# Contact Form Views (Public - No Authentication Required)
+@api_view(['POST'])
+def contact_message_create(request):
+    """Handle contact form submissions from the frontend"""
+    if request.method == 'POST':
+        serializer = ContactMessageSerializer(data=request.data)
+        if serializer.is_valid():
+            # Save the contact message
+            serializer.save()
+            return Response(
+                {"message": "Message sent successfully! We'll get back to you soon."}, 
+                status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

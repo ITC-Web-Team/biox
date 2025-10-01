@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api';
 
 const ProtectedRoute = ({ children, requiredRole = 'admin' }) => {
   const [authStatus, setAuthStatus] = useState({
@@ -16,7 +17,7 @@ const ProtectedRoute = ({ children, requiredRole = 'admin' }) => {
 
   const checkAuthentication = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/auth/check_admin/', {
+      const response = await axios.get(API_ENDPOINTS.checkAdmin, {
         withCredentials: true
       });
       

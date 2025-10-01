@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UserDashboard.css';
+import { API_ENDPOINTS } from "../config/api";
 
 const UserDashboard = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -11,11 +12,17 @@ const UserDashboard = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.get(`http://127.0.0.1:8000//api/registrations/?email=${email}`);
+      // Use proper API endpoint to search registrations by email
+      const response = await axios.get(`${API_ENDPOINTS.eventRegistrations}?email=${email}`);
       setRegistrations(response.data);
     } catch (error) {
       console.error('Error fetching registrations:', error);
-      alert('Error fetching your registrations. Please try again.');
+      if (error.response) {
+        console.error('Backend response:', error.response.data);
+        alert(`Error fetching registrations: ${error.response.data.message || 'Server error'}`);
+      } else {
+        alert('Error fetching your registrations. Please check your connection and try again.');
+      }
     } finally {
       setLoading(false);
     }
