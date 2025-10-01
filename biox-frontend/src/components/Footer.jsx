@@ -57,7 +57,7 @@ const Footer = () => {
               <FaInstagram />
             </a>
             <a 
-              href="#linkedin" 
+              href="https://www.linkedin.com/company/biox-club-iit-bombay/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="social-link linkedin"

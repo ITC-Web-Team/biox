@@ -23,7 +23,7 @@ const JoinClub = () => {
           </a>
           
           <a 
-            href="#whatsapp" 
+            href="https://chat.whatsapp.com/I56uJ92FlWlEBKkEn9rWA2" 
             className="join-link whatsapp-link"
           >
             <FaWhatsapp className="join-icon" />
