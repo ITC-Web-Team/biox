@@ -9,9 +9,9 @@ const Resources = () => {
   const data = [
     {
       id: 1,
-      imagelink: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=250&fit=crop&crop=center",
+      imagelink: "/resources-images/evolution.png",
       title: "LEARNER SPACE 2025",
-      descpt1: "EVOLUTION101: FROM MOLECULES TO MANKIND",
+      descpt1: "Evolution101: From molecules to mankind",
       descpt2: "Comprehensive evolution course",
       descpt3: "Molecular to organismal level",
       link: "https://drive.google.com/drive/folders/1a9AhTowi1JFn2qF1mmi0KfcMLi5_9Flo?usp=sharing",
@@ -19,9 +19,9 @@ const Resources = () => {
     },
     {
       id: 2,
-      imagelink: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=250&fit=crop&crop=center",
+      imagelink: "/resources-images/biochem bioeng.png",
       title: "INTRODUCTION TO BIOCHEMISTRY",
-      descpt1: "BIOCHEMICAL ENGINEERING",
+      descpt1: "Biochemical Engineering",
       descpt2: "Chemistry and Biology bond",
       descpt3: "Dive into exciting interactions",
       link: "https://drive.google.com/drive/folders/1a9AhTowi1JFn2qF1mmi0KfcMLi5_9Flo?usp=sharing",
@@ -29,9 +29,9 @@ const Resources = () => {
     },
     {
       id: 3,
-      imagelink: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=400&h=250&fit=crop&crop=center",
+      imagelink: "/resources-images/immunology.jpg",
       title: "TSS 2024 - IMMUNOLOGY",
-      descpt1: "IMMUNOLOGY AND VACCINOLOGY",
+      descpt1: "Immunology and viccinology",
       descpt2: "Immune system mechanisms",
       descpt3: "Vaccine development principles",
       link: "https://drive.google.com/drive/folders/1kSPcCMD_BgffFIozL6KRbVzzALIOqbSx?usp=sharing",
@@ -39,7 +39,7 @@ const Resources = () => {
     },
     {
       id: 4,
-      imagelink: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&h=250&fit=crop&crop=center",
+      imagelink: "/resources-images/proteomics.png",
       title: "TSS 2024 - PROTEOMICS",
       descpt1: "Protein analysis techniques",
       descpt2: "Mass spectrometry",
@@ -49,7 +49,7 @@ const Resources = () => {
     },
     {
       id: 5,
-      imagelink: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&crop=center",
+      imagelink: "/resources-images/symposium.png",
       title: "NEW FRONTIERS SYMPOSIUM",
       descpt1: "Biotechnology symposium",
       descpt2: "Industry experts",
