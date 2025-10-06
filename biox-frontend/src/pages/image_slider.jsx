@@ -2,35 +2,36 @@ import React from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import red from '../static/red.jpeg';
+// import red from '../static/red.jpeg';
 import logo from '../static/logo.png';
 
-const slider_images = [red, logo];
+const slider_images = [logo];
 
 function ImageSlider(){
  
 const settings ={
     dots:true,
-    infinite:true,
+    infinite:false,
     speed:200,
     slidesToShow: 1,        
     slidesToScroll: 1,      
     autoplay: true,         
     autoplaySpeed: 3000,    
-    arrows: true,      
+    arrows: true,
+    pauseonHover: true,
 } ;   
 
 
 return (
     <div className='slider_container' style={{
-        height: '120rem',
-        border:'2px solid',
-        borderRadius: '10px',
-        width:'50%',
-        margin: '0 auto', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow:'hidden',
+        position: 'relative',
+        width: '50%',
+        aspectRatio: '16 / 9',
+        margin: '0 auto',
+        overflow: 'hidden',
+        borderRadius: '12px',
+        border: '2px solid #ccc',
+        boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
         // objectFit: 'contain',
       }}>
 <Slider {...settings}>

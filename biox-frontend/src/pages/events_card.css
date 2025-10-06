@@ -95,22 +95,24 @@
   
 .calendar_btn {
     background-color: black;
-    color: red;
+    color: rgb(255, 255, 255);
+    transition: all 0.3s ease;
 }
 
 .calendar_btn:hover {
     background-color: red;
-    color: black;
+    color: rgb(217, 217, 217);
 }
 
 .register_btn {
     background-color: black;
-    color: red;
+    color: rgb(255, 255, 255);
+    transition: all 0.3s ease;
 }
 
 .register_btn:hover {
     background-color: red;
-    color: black;
+    color: rgb(217, 217, 217);
 }
 
 /* Responsive Styles */

@@ -17,7 +17,7 @@ function Events() {
   return (
     <div className='events_container'>
       <div className='events_slider'>
-        <ImageSlider/>
+        
         <h1>events</h1>
         <div className='e_cards'>
           {eventDetail.map(event => (
@@ -29,6 +29,7 @@ function Events() {
             />
           ))}
         </div>
+        <ImageSlider/>
       </div>
     </div>
   )
