@@ -3,15 +3,20 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 // import red from '../static/red.jpeg';
-import logo from '../static/logo.png';
+// import logo from '../static/logo.png';
+import slider1 from '../static/slider1.jpg';
+import slider2 from '../static/slider2.jpg';
+import slider3 from '../static/slider3.jpg';
+import slider4 from '../static/slider4.jpg';
+import slider5 from '../static/slider5.jpg';
 
-const slider_images = [logo];
+const slider_images = [slider1, slider2, slider3, slider4, slider5];
 
 function ImageSlider(){
  
 const settings ={
     dots:true,
-    infinite:false,
+    infinite:true,
     speed:200,
     slidesToShow: 1,        
     slidesToScroll: 1,      
