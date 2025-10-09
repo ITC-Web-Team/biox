@@ -4,7 +4,7 @@ import './home.css'
 import Abouthp from '../components/Abouthp'
 import JoinClub from '../components/JoinClub'
 import DiscoverX from '../components/DiscoverX'
-import GallerySlideshow from '../components/GallerySlideshow'
+import ImageSlider from '../components/GallerySlideshow'
 import FAQ from '../components/FAQ'
 
 function Home() {
@@ -14,7 +14,7 @@ function Home() {
         <Abouthp />
         <JoinClub />
         <DiscoverX />
-        <GallerySlideshow />
+        <ImageSlider />
         <FAQ />
     </>
   )
