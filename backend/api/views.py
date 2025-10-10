@@ -22,12 +22,32 @@ def csrf_token(request):
 class EventViewSet(viewsets.ModelViewSet):
   queryset = Event.objects.all()
   serializer_class = EventSerializer
+  # Default permission for admin actions
   permission_classes = [IsAuthenticated, IsAdminUser]
+
+  def get_permissions(self):
+    """
+    Allow public access for listing and retrieving events
+    Require admin authentication for create/update/delete
+    """
+    if self.action in ['list', 'retrieve']:
+      return []  # No authentication required for viewing events
+    return [IsAuthenticated(), IsAdminUser()]
 
 class EventRegistrationViewSet(viewsets.ModelViewSet):
   queryset = EventRegistration.objects.all()
   serializer_class = EventRegistrationSerializer
+  # Default permission for admin actions
   permission_classes = [IsAuthenticated, IsAdminUser]
+
+  def get_permissions(self):
+    """
+    Allow public POST (create) for event registration
+    Require admin authentication for all other actions
+    """
+    if self.action == 'create':
+      return []  # No authentication required for creating registrations
+    return [IsAuthenticated(), IsAdminUser()]
 
   @action(detail=False, methods=['get'])
   def by_event(self, request):
@@ -107,7 +127,17 @@ class EventRegistrationViewSet(viewsets.ModelViewSet):
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    # Default permission for admin actions
     permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def get_permissions(self):
+        """
+        Allow public POST (create) for team creation
+        Require admin authentication for all other actions
+        """
+        if self.action in ['create', 'create_team']:
+            return []  # No authentication required for creating teams
+        return [IsAuthenticated(), IsAdminUser()]
 
     def create(self, request):
         event_id = request.data.get('event_id')
@@ -131,6 +161,14 @@ class TeamViewSet(viewsets.ModelViewSet):
         
         except Event.DoesNotExist:
             return Response({"error": "Event not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=False, methods=['post'])
+    def create_team(self, request):
+        """
+        Custom endpoint for team creation (same as create but with custom URL)
+        This matches the frontend's expected endpoint: /api/teams/create_team/
+        """
+        return self.create(request)
 
 
 @api_view(['GET'])

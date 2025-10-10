@@ -23,6 +23,20 @@ class Team(models.Model):
 
   def __str__(self):
     return f"{self.team_name} - {self.event.title}"
+  
+  def get_member_count(self):
+    """Return the number of team members"""
+    return self.members.count()
+  
+  def is_team_full(self):
+    """Check if team has reached maximum size"""
+    if self.event.max_team_size:
+      return self.get_member_count() >= self.event.max_team_size
+    return False
+  
+  def can_add_member(self):
+    """Check if more members can be added to the team"""
+    return not self.is_team_full()
 
 class EventRegistration(models.Model):
   event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='registrations')

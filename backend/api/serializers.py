@@ -3,9 +3,21 @@ from .models import Event, EventRegistration, Team, Project, ProjectRegistration
 
 # Event system serializers
 class EventSerializer(serializers.ModelSerializer):
+  image = serializers.SerializerMethodField()
+
   class Meta:
     model = Event
     fields = '__all__'
+  
+  def get_image(self, obj):
+    if not obj.image:
+        return None
+    request = self.context.get('request')
+    if request:
+        # Build full URL including host
+        return request.build_absolute_uri(obj.image.url)
+    # fallback to relative url
+    return obj.image.url
 
 class EventRegistrationSerializer(serializers.ModelSerializer):
     event_title = serializers.CharField(source='event.title', read_only=True)
@@ -31,6 +43,14 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
 
             if team_id:
                 team = Team.objects.get(team_id=team_id)
+                
+                # Validate team size
+                current_members = team.get_member_count()
+                if event.max_team_size and current_members >= event.max_team_size:
+                    raise serializers.ValidationError({
+                        'team_id': f'Team is full. Maximum team size is {event.max_team_size} members.'
+                    })
+                
                 validated_data['team'] = team
 
         except Event.DoesNotExist:
@@ -46,9 +66,15 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
   
 class TeamSerializer(serializers.ModelSerializer):
+  member_count = serializers.SerializerMethodField()
+  event_title = serializers.CharField(source='event.title', read_only=True)
+  
   class Meta:
     model = Team
     fields = '__all__'
+  
+  def get_member_count(self, obj):
+    return obj.get_member_count()
 
 # Project system serializers
 class ProjectSerializer(serializers.ModelSerializer):

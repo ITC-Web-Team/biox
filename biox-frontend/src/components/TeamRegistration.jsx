@@ -10,8 +10,14 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
     { name: '', email: '', phone: '', ldap_id: '', is_leader: true }
   ]);
   const [currentStep, setCurrentStep] = useState(1);
+  const [error, setError] = useState('');
 
   const addTeamMember = () => {
+    if (event.max_team_size && teamMembers.length >= event.max_team_size) {
+      setError(`Maximum team size is ${event.max_team_size} members`);
+      return;
+    }
+    setError('');
     setTeamMembers([...teamMembers, { name: '', email: '', phone: '', ldap_id: '', is_leader: false }]);
   };
 
@@ -20,6 +26,7 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
       const updated = [...teamMembers];
       updated.splice(index, 1);
       setTeamMembers(updated);
+      setError('');
     }
   };
 
@@ -37,10 +44,37 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
     setTeamMembers(updated);
   };
 
+  const validateTeamSize = () => {
+    const teamSize = teamMembers.length;
+    if (event.min_team_size && teamSize < event.min_team_size) {
+      setError(`Minimum team size is ${event.min_team_size} members. Current: ${teamSize}`);
+      return false;
+    }
+    if (event.max_team_size && teamSize > event.max_team_size) {
+      setError(`Maximum team size is ${event.max_team_size} members. Current: ${teamSize}`);
+      return false;
+    }
+    setError('');
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validate team size before submission
+    if (!validateTeamSize()) {
+      return;
+    }
+
+    // Ensure at least one team leader is selected
+    const hasLeader = teamMembers.some(member => member.is_leader);
+    if (!hasLeader) {
+      setError('Please select at least one team leader');
+      return;
+    }
+    
     try {
+      setError('');
       // Get CSRF token for secure submission
       const csrfToken = await getCSRFToken();
       
@@ -66,7 +100,7 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
           name: member.name,
           email: member.email,
           phone: member.phone,
-          ldap_id: member.ldap_id,
+          ldap_id: member.ldap_id || '',
           is_team_leader: member.is_leader,
           event_id: event.event_id,
           team_id: teamId
@@ -81,9 +115,10 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
       
       if (error.response) {
         console.error('Backend response:', error.response.data);
-        alert(`Registration failed: ${error.response.data.error || error.response.data.message || 'Server error'}`);
+        const errorMsg = error.response.data.error || error.response.data.message || JSON.stringify(error.response.data) || 'Server error';
+        setError(`Registration failed: ${errorMsg}`);
       } else {
-        alert('Registration failed. Please check your connection and try again.');
+        setError('Registration failed. Please check your connection and try again.');
       }
     }
   };
@@ -97,6 +132,12 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
             <button className="close-btn" onClick={onClose}>×</button>
           </div>
           
+          {event.min_team_size && event.max_team_size && (
+            <div className="team-info">
+              <p>Team Size: {event.min_team_size} - {event.max_team_size} members</p>
+            </div>
+          )}
+          
           <form onSubmit={(e) => { e.preventDefault(); setCurrentStep(2); }}>
             <div className="form-group">
               <label htmlFor="teamName">Team Name *</label>
@@ -106,6 +147,7 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
                 required
+                minLength={3}
               />
             </div>
             
@@ -126,6 +168,19 @@ const TeamRegistration = ({ event, onClose, onRegister }) => {
           <h2>Add Team Members for {teamName}</h2>
           <button className="close-btn" onClick={onClose}>×</button>
         </div>
+        
+        {event.min_team_size && event.max_team_size && (
+          <div className="team-info">
+            <p>Team Size Required: {event.min_team_size} - {event.max_team_size} members</p>
+            <p>Current Members: {teamMembers.length}</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="error-message" style={{ color: 'red', padding: '10px', marginBottom: '10px', backgroundColor: '#ffe6e6', borderRadius: '5px' }}>
+            {error}
+          </div>
+        )}
         
         <form onSubmit={handleSubmit}>
           {teamMembers.map((member, index) => (

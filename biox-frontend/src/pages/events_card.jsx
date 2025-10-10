@@ -10,9 +10,15 @@ const Events_card = ({ eventDetail, onAddToCalendar }) => {
   if(!eventDetail) return <p>Not found</p>;
 
   const handleRegister = () => {
+    console.log('Event Detail:', eventDetail);
+    console.log('has_teams value:', eventDetail.has_teams);
+    console.log('has_teams type:', typeof eventDetail.has_teams);
+    
     if(eventDetail.has_teams) {
+      console.log('Opening TEAM registration');
       setShowTeamRegistration(true);
     } else {
+      console.log('Opening SOLO registration');
       setShowRegistration(true);
     }
   };
@@ -41,13 +47,23 @@ const Events_card = ({ eventDetail, onAddToCalendar }) => {
           <div className='short_info'>
             <h2>{eventDetail.title}</h2>
             <p>{eventDetail.description}</p>
+            {eventDetail.has_teams && (
+              <p style={{fontSize: '0.9em', color: '#666', marginTop: '5px'}}>
+                🏆 Team Event ({eventDetail.min_team_size}-{eventDetail.max_team_size} members)
+              </p>
+            )}
+            {!eventDetail.has_teams && (
+              <p style={{fontSize: '0.9em', color: '#666', marginTop: '5px'}}>
+                👤 Individual Event
+              </p>
+            )}
           </div>
           <div className='e_btn'>
             <button className='calendar_btn' onClick={onAddToCalendar}>
               Add to Calendar
             </button>
             <button className='register_btn' onClick={handleRegister}>
-              Register Now
+              {eventDetail.has_teams ? 'Register Team' : 'Register Now'}
             </button>
           </div>
         </div>
