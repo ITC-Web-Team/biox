@@ -40,12 +40,12 @@
 
 @media (max-width: 768px) {
     .events_container {
-        padding: 1rem 0;
+        padding: 6rem 0 1rem 0; /* Maintain top padding for navbar on mobile */
     }
 
     .events_slider h1 {
         font-size: 2rem;
-        margin: 1rem 0;
+        margin: 1.5rem 0 1rem 0; /* Add extra top margin for heading */
     }
 
     .e_cards {
@@ -56,8 +56,13 @@
 }
 
 @media (max-width: 480px) {
+    .events_container {
+        padding: 5rem 0 1rem 0; /* Maintain spacing on small mobile */
+    }
+
     .events_slider h1 {
         font-size: 1.5rem;
+        margin: 1rem 0;
     }
 
     .e_cards {
