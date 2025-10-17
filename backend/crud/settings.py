@@ -135,9 +135,9 @@ WSGI_APPLICATION = 'crud.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Create data directory for persistent storage
+# Create data directory for persistent storage (mounted volume in production)
 DATA_DIR = BASE_DIR / 'data'
-DATA_DIR.mkdir(exist_ok=True)
+DATA_DIR.mkdir(exist_ok=True)  # Auto-create on startup
 
 DATABASES = {
     'default': {
