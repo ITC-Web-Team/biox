@@ -1,0 +1,54 @@
+# Root level gitignore for biox project
+
+# Database files - NEVER commit these!
+*.sqlite3
+*.db
+db.sqlite3
+**/db.sqlite3
+backend/db.sqlite3
+
+# Media files - User uploads, keep separate per environment
+media/
+**/media/
+backend/media/
+
+# Environment files
+.env
+.env.local
+.env.production
+**/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+*.egg-info/
+.venv/
+venv/
+ENV/
+
+# Node
+node_modules/
+dist/
+build/
+.next/
+npm-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Backup files
+*.backup
+*.bak
+*.old
