@@ -60,9 +60,22 @@ const ProjectRegistration = () => {
       setFormData({ student_name: "", student_email: "", student_phoneno: "", student_sop: "" });
     } catch (error) {
       console.error("Registration error:", error);
-      if (error.response) {
+      if (error.response && error.response.data) {
         console.error("Backend response:", error.response.data);
-        setStatus(`Registration failed: ${error.response.data.message || 'Server error'}`);
+        
+        // Show detailed error messages
+        let errorMsg = error.response.data.message || 'Server error';
+        
+        // If there are field-specific errors, show them
+        if (error.response.data.errors) {
+          const errors = error.response.data.errors;
+          const errorDetails = Object.entries(errors)
+            .map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(', ') : msgs}`)
+            .join('\n');
+          errorMsg = `${errorMsg}\n${errorDetails}`;
+        }
+        
+        setStatus(`Registration failed: ${errorMsg}`);
       } else {
         setStatus("Registration failed. Please check your connection and try again.");
       }

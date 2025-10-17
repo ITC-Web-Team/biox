@@ -232,11 +232,23 @@ def project_registrations_list(request):
         return Response(serializer.data)
     
     elif request.method == 'POST':
+        # Log the incoming data for debugging
+        print("Project Registration Data:", request.data)
+        
         serializer = ProjectRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"message": "Registration successful!", "data": serializer.data}, 
+                status=status.HTTP_201_CREATED
+            )
+        
+        # Return detailed error messages
+        print("Validation Errors:", serializer.errors)
+        return Response({
+            "message": "Registration failed. Please check your input.",
+            "errors": serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
