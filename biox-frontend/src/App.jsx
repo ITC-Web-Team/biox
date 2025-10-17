@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import ScrollToTop from './components/ScrollToTop'
 import Team from './pages/Team'
 import Literature from './pages/literature'
 import Resources from './pages/Resources'
@@ -21,8 +22,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
-        <Routes>
+        <ScrollToTop>
+          <Navbar />
+          <Routes>
           <Route path = '/' element = {<Home />}></Route>
           <Route path = '/events' element = {< Events/>}></Route>
           <Route path = '/team' element = {<Team />}></Route>
@@ -41,8 +43,9 @@ function App() {
           <Route path = '/blog' element = {<Blog/>}></Route>
           <Route path = '/Register/:projectId' element = {<ProjectRegister/>}></Route>
           <Route path="/test/:Id" element={<h1>Test Works!</h1>} />
-        </Routes>
-        <Footer />
+          </Routes>
+          <Footer />
+        </ScrollToTop>
       </BrowserRouter>
     </>
   )
