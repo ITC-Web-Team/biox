@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'api',
     'corsheaders',
     'rest_framework_simplejwt',
+    'import_export',  # For admin export/import functionality
 ]
 
 REST_FRAMEWORK = {
